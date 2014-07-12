@@ -1,0 +1,8 @@
+*.swp
+*.pyc
+*.pyo
+/.coverage
+/coverage.xml
+/nosetests.xml
+/docs/_build
+/src/pyramid_sqlalchemy.egg-info
