@@ -10,9 +10,6 @@ the ORM declarative extension.
 
    usage
    init
-   func
-   types
-   upgrade
    changes
 
 Indices and tables
