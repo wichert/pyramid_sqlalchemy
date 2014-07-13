@@ -10,3 +10,5 @@
 /bin
 /include
 /lib
+
+/pyvenv.cfg
