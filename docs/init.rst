@@ -10,7 +10,8 @@ it by using the ``includeme`` function of the Pyramid configurator object:
 
 This will pick up any ``sqlalchemy.*`` entries from your ``.ini`` file and
 use those to configure SQLAlchemy. In particular the ``sqlalchemy.url``
-entry is used, which must contain a database URI.
+entry is used, which must contain a :ref:`database URL
+<sqlalchemy:database_urls>`.
 
 For non-Pyramid applications or special situations you can also use
 :py:func:`pyramid_sqlalchemy.init_sqlalchemy` to configure a SQLAlchemy engine
