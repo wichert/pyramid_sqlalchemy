@@ -102,7 +102,7 @@ html_theme = 'haiku'
 
 # The name for this set of Sphinx documents.  If None, it defaults to
 # "<project> v<release> documentation".
-#html_title = None
+html_title = 'pyramid_sqlalchemy 1.0'
 
 # A shorter title for the navigation bar.  Default is the same as html_title.
 #html_short_title = None
@@ -218,4 +218,5 @@ man_pages = [
 # Example configuration for intersphinx: refer to the Python standard library.
 intersphinx_mapping = {
         'python': ('http://docs.python.org/', None),
+        'pyramid': ('http://docs.pylonsproject.org/projects/pyramid/en/latest/', None),
         'sqlalchemy': ('http://www.sqlalchemy.org/docs', None)}

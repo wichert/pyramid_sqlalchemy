@@ -46,6 +46,7 @@ Contents
    usage
    init
    transactions
+   tests
    changes
 
 Indices and tables
