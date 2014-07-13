@@ -9,8 +9,8 @@ When submitting a ticket please include the following information:
 * if you encounter an exception: the complete Python backtrace
 
 
-Submitting a patch or pull request
-----------------------------------
+Patches and pull requests
+-------------------------
 
 When submitting a patch or pull request please make sure it applies cleanly to
 the current git master branch and all tests are passing on Python 2.7 and
