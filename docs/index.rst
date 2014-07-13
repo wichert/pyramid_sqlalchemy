@@ -4,10 +4,10 @@
 
 SQLAlchemy relies on global state for a few things: 
 
-* A `:py:class:`MetaData <sqlalchemy:MetaData>` instance which tracks all
+* A :ref:`MetaData <sqlalchemy:metadata_toplevel>` instance which tracks all
   known SQL tables.
-* A base class for all models using the ORM.
-* A session factory.
+* A :ref:`ORM base class <sqlalchemy:declarative_toplevel>` for all models using the ORM.
+* A :ref:`session factory <sqlalchemy:unitofwork_contextual>`.
 
 Every application using SQLAlchemy must provides its own instance of these.
 This makes it hard create add-on packages that also use SQLAlchemy, since they

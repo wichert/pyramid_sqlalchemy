@@ -1,6 +1,6 @@
 `pyramid_sqlalchemy` provides some basic glue to facilitate using
-`SQLAlchemy <http://www.sqlalchemy.org/>`) with `Pyramid
-<docs.pylonsproject.org/projects/pyramid/en/latest/>`_).
+`SQLAlchemy <http://www.sqlalchemy.org/>`_ with `Pyramid
+<docs.pylonsproject.org/projects/pyramid/en/latest/>`_.
 
 SQLAlchemy relies on global state for a few things: 
 

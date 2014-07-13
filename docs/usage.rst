@@ -33,6 +33,6 @@ the object.
 
    class Account(BaseObject):
        def favourites(self):
-           "Return all the recent favourite articles."""
+           """Return all the recent favourite articles."""
            session = object_session(self)
            return session.query(Article).all()
