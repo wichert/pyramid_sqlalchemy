@@ -11,7 +11,6 @@ requires = [
 
 tests_require = [
     'mock',
-    's4u.upgrade',
     ]
 
 setup(name='pyramid_sqlalchemy',
