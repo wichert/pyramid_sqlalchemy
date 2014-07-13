@@ -6,7 +6,7 @@ and can be included directly:
 
 .. code-block:: python
 
-   from pyramid_sqlalchemy.meta import BaseObject
+   from pyramid_sqlalchemy import BaseObject
 
    class Account(BaseObject):
        __tablename__ = 'account'
@@ -14,16 +14,18 @@ and can be included directly:
 
 
 When you need to build a query you can use the
-:py:obj:`pyramid_sqlalchemy.meta.Session` session factory. 
+:py:obj:`pyramid_sqlalchemy.Session` session factory. 
 
 .. code-block:: python
 
-   from pyramid_sqlalchemy.meta import Session
+   from pyramid_sqlalchemy import Session
 
    account = Session.query(Account).first()
 
-When writing methods in a model it is recommended to use
-:py:func:`sqlalchemy.orm.session.object_session` instead:
+When writing methods for a model in a you can also use
+:py:func:`sqlalchemy.orm.session.object_session` to get the current session for
+the object.
+
 
 .. code-block:: python
 
