@@ -1,4 +1,5 @@
-# Contributing
+Reporting an issue
+------------------
 
 When submitting a ticket please include the following information:
 
@@ -7,6 +8,9 @@ When submitting a ticket please include the following information:
 * the installed version of `SQLAlchemy`
 * if you encounter an exception: the complete Python backtrace
 
+
+Submitting a patch of pull request
+----------------------------------
 
 When submitting a patch or pull request please make sure it applies cleanly to
 the current git master branch and all tests are passing on Python 2.7 and
