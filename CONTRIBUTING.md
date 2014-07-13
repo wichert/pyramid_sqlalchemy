@@ -9,7 +9,7 @@ When submitting a ticket please include the following information:
 * if you encounter an exception: the complete Python backtrace
 
 
-Submitting a patch of pull request
+Submitting a patch or pull request
 ----------------------------------
 
 When submitting a patch or pull request please make sure it applies cleanly to
