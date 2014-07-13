@@ -16,7 +16,8 @@ tests_require = [
 setup(name='pyramid_sqlalchemy',
       version=version,
       description='SQLAlchemy integration for pyramid',
-      long_description=open('README.rst').read(),
+      long_description=open('README.rst').read() + '\n' +
+              open('changes.rst').read(),
       classifiers=[
           'Development Status :: 5 - Production/Stable',
           'Intended Audience :: Developers',
