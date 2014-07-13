@@ -1,6 +1,7 @@
 *.sw[opq]
 *.py[co]
 /.coverage
+/dist
 /coverage.xml
 /nosetests.xml
 /docs/_build

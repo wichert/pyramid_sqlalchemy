@@ -1,10 +1,9 @@
 from setuptools import setup
 from setuptools import find_packages
 
-version = '1.0dev'
+version = '1.0'
 
 requires = [
-    'setuptools',
     'SQLAlchemy >= 0.8.0',
     'zope.sqlalchemy',
     ]
@@ -39,7 +38,7 @@ setup(name='pyramid_sqlalchemy',
       packages=find_packages('src'),
       package_dir={'': 'src'},
       include_package_data=True,
-      zip_safe=False,
+      zip_safe=True,
       install_requires=requires,
       tests_require=tests_require,
       extras_require={
