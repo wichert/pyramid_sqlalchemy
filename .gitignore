@@ -1,6 +1,5 @@
-*.swp
-*.pyc
-*.pyo
+*.sw[opq]
+*.py[co]
 /.coverage
 /coverage.xml
 /nosetests.xml
