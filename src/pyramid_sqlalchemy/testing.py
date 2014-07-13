@@ -4,7 +4,8 @@ from sqlalchemy.orm import sessionmaker
 from sqlalchemy.schema import MetaData
 from sqlalchemy import create_engine
 from pyramid_sqlalchemy import init_sqlalchemy
-from pyramid_sqlalchemy import meta
+from pyramid_sqlalchemy import metadata
+from pyramid_sqlalchemy import Session
 import transaction
 
 
@@ -18,16 +19,16 @@ class DatabaseTestCase(unittest.TestCase):
         self.engine = create_engine(self.db_uri)
         init_sqlalchemy(self.engine)
         if self.create_tables:
-            meta.metadata.create_all()
+            metadata.create_all()
         super(DatabaseTestCase, self).setUp()
 
     def tearDown(self):
         transaction.abort()
-        meta.Session.remove()
+        Session.remove()
         if self.create_tables:
-            meta.metadata.drop_all()
-        meta.Session.configure(bind=None)
-        meta.metadata.bind = None
+            metadata.drop_all()
+        Session.configure(bind=None)
+        metadata.bind = None
         self.engine.dispose()
         super(DatabaseTestCase, self).tearDown()
 

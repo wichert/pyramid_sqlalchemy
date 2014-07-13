@@ -1,7 +1,8 @@
 import unittest
-from pyramid_sqlalchemy import meta
 import sqlalchemy.schema
 import sqlalchemy.types
+from pyramid_sqlalchemy.meta import BaseObject
+from pyramid_sqlalchemy.meta import Session
 
 
 class DatabaseTestCaseTests(unittest.TestCase):
@@ -16,32 +17,29 @@ class DatabaseTestCaseTests(unittest.TestCase):
 
     def test_tables_exist(self):
         from sqlalchemy.engine.reflection import Inspector
-        from pyramid_sqlalchemy import meta
 
         testcase = self.DatabaseTestCase()
         try:
             testcase.setUp()
-            inspector = Inspector.from_engine(meta.Session.bind)
+            inspector = Inspector.from_engine(Session.bind)
             self.assertTrue('dummy' in inspector.get_table_names())
         finally:
             testcase.tearDown()
 
     def test_no_leakage(self):
-        from pyramid_sqlalchemy import meta
         testcase = self.DatabaseTestCase()
 
-        class Dummy(meta.BaseObject):
+        class Dummy(BaseObject):
             __tablename__ = 'dummy'
 
             id = sqlalchemy.schema.Column(sqlalchemy.types.Integer(),
                     primary_key=True, autoincrement=True)
 
-
         try:
             testcase.setUp()
-            meta.Session.add(Dummy())
+            Session.add(Dummy())
             testcase.tearDown()
             testcase.setUp()
-            self.assertEqual(meta.Session.query(Dummy).count(), 0)
+            self.assertEqual(Session.query(Dummy).count(), 0)
         finally:
             testcase.tearDown()

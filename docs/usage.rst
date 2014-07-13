@@ -29,7 +29,7 @@ the object.
 
 .. code-block:: python
 
-   from sqlalchemy.orm.session import object_session
+   from sqlalchemy.orm import object_session
 
    class Account(BaseObject):
        def favourites(self):

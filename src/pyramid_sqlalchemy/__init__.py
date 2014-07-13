@@ -1,5 +1,7 @@
 from sqlalchemy import engine_from_config
-from pyramid_sqlalchemy import meta
+from pyramid_sqlalchemy.meta import metadata
+from pyramid_sqlalchemy.meta import BaseObject
+from pyramid_sqlalchemy.meta import Session
 import pyramid_sqlalchemy.events
 pyramid_sqlalchemy.events  # Keep PyFlakes happy
 
@@ -7,8 +9,8 @@ pyramid_sqlalchemy.events  # Keep PyFlakes happy
 def init_sqlalchemy(engine):
     """Initialise the SQLAlchemy models. This must be called before using
     using any of the SQLAlchemy managed the tables or classes in the model."""
-    meta.Session.configure(bind=engine)
-    meta.metadata.bind = engine
+    Session.configure(bind=engine)
+    metadata.bind = engine
 
 
 def includeme(config):
@@ -19,4 +21,4 @@ def includeme(config):
     init_sqlalchemy(engine)
 
 
-__all__ = ['init_model']
+__all__ = ['BaseObject', 'Session', 'metadata', 'init_model']
