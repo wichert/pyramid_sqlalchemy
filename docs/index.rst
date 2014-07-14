@@ -29,8 +29,8 @@ SQLAlchemy in a Pyramid application.
        __tablename__ = 'my_model'
        ...
 
-   def main():
-       config = Configurator()
+   def main(global_config, **settings):
+       config = Configurator(settings=settings)
        # Configure SQLAlchemy using settings from the .ini file
        config.include('pyramid_sqlalchemy')
        ...
