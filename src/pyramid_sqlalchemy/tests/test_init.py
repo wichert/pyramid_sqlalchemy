@@ -28,9 +28,9 @@ class includeme_tests(unittest.TestCase):
     def test_two_phase_directive(self):
         import mock
         config = Configurator()
-        with mock.patch('pyramid_sqlalchemy.Session.configure') as configure, \
-                mock.patch('pyramid_sqlalchemy.engine_from_config'), \
-                mock.patch('pyramid_sqlalchemy.init_sqlalchemy'):
-            config.include('pyramid_sqlalchemy')
-            config.enable_sql_two_phase_commit()
+        with mock.patch('pyramid_sqlalchemy.Session.configure') as configure:
+            with mock.patch('pyramid_sqlalchemy.engine_from_config'):
+                with mock.patch('pyramid_sqlalchemy.init_sqlalchemy'):
+                    config.include('pyramid_sqlalchemy')
+                    config.enable_sql_two_phase_commit()
         configure.assert_called_with(twophase=True)
