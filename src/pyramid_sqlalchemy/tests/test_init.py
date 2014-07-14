@@ -1,5 +1,6 @@
 import unittest
 from sqlalchemy import create_engine
+from pyramid.config import Configurator
 from pyramid_sqlalchemy import includeme
 from pyramid_sqlalchemy import init_sqlalchemy
 from pyramid_sqlalchemy import Session
@@ -16,15 +17,20 @@ class includeme_tests(unittest.TestCase):
     def test_sqlite_config(self):
         import mock
 
-        class Registry:
-            settings = {'sqlalchemy.url': 'sqlite://'}
+        config = Configurator(settings={'sqlalchemy.url': 'sqlite://'})
 
-        class Config:
-            registry = Registry
-
-        config = Config()
         with mock.patch('pyramid_sqlalchemy.init_sqlalchemy') as init_sqlalchemy:
             includeme(config)
             self.assertTrue(init_sqlalchemy.called)
             engine = init_sqlalchemy.mock_calls[0][1][0]
             self.assertEqual(str(engine.url), 'sqlite://')
+
+    def test_two_phase_directive(self):
+        import mock
+        config = Configurator()
+        with mock.patch('pyramid_sqlalchemy.Session.configure') as configure, \
+                mock.patch('pyramid_sqlalchemy.engine_from_config'), \
+                mock.patch('pyramid_sqlalchemy.init_sqlalchemy'):
+            config.include('pyramid_sqlalchemy')
+            config.enable_sql_two_phase_commit()
+        configure.assert_called_with(twophase=True)

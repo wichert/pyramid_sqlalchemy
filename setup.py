@@ -4,13 +4,14 @@ from setuptools import find_packages
 version = '1.1dev'
 
 requires = [
-    'SQLAlchemy >=0.7.0',
-    'zope.sqlalchemy >=0.7.4',
-    ]
+        'pyramid',
+        'SQLAlchemy >=0.7.0',
+        'zope.sqlalchemy >=0.7.4',
+        ]
 
 tests_require = [
-    'mock',
-    ]
+        'mock',
+        ]
 
 setup(name='pyramid_sqlalchemy',
       version=version,

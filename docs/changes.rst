@@ -6,7 +6,8 @@ Changelog
 
 - Add missing schema to Pyramid-URL. This broke ReST rendering on the PyPI page.
 
-- Automatically enable two-phase commit when the SQL dialect supports it.
+- Add a new ``enable_sql_two_phase_commit()`` configuration directive enable
+  two-phase commit.
 
 - Enable foreign key constraint checking for SQLite in DatabaseTestCase.
 
