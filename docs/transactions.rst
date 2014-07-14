@@ -82,3 +82,37 @@ transaction API directly. The methods you can use are:
            tx.abort()
        else:
            tx.commit()
+
+
+Non-ORM modifications
+---------------------
+
+zope.sqlalchemy, which is used to handle the integration of SQLAlchemy and
+the transaction system, can only detect changes made through the ORM. Sometimes
+you may need to bypass the ORM and execute SQL statements directly using SQLAlchemy's
+core API.
+
+.. code-block:: python
+   :linenos:
+
+   from pyramid_sqlalchemy import Session
+   from myapp.models import MyModel
+
+   # Execute an UPDATE query directly, without using the ORM
+   Session.query(MyModel).update({'active': False})
+
+If you do this zope.sqlalchemy will not detect that you made any changes and
+will not correctly commit the transaction. To handle this you must call
+``mark_changed()`` with the current session.
+
+.. code-block:: python
+   :linenos:
+   :emphasize-lines: 2,7
+
+   from pyramid_sqlalchemy import Session
+   from zope.sqlalchemy import mark_changed
+   from myapp.models import MyModel
+
+   session = Session()
+   session.query(MyModel).update({'active': False})
+   mark_changed(session)
