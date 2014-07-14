@@ -4,8 +4,8 @@ from setuptools import find_packages
 version = '1.1dev'
 
 requires = [
-    'SQLAlchemy >= 0.8.0',
-    'zope.sqlalchemy',
+    'SQLAlchemy >=0.7.0',
+    'zope.sqlalchemy >=0.7.4',
     ]
 
 tests_require = [

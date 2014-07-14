@@ -2,12 +2,12 @@
 from sqlalchemy import orm
 from sqlalchemy import schema
 from sqlalchemy.ext.declarative import declarative_base
-from zope.sqlalchemy import ZopeTransactionExtension
+from zope.sqlalchemy import register
 
 #: SQLAlchemy session manager.  Updated by
 # :py:func:`s4u.sqlalchemy.init_sqlalchemy`.
-Session = orm.scoped_session(
-        orm.sessionmaker(extension=ZopeTransactionExtension()))
+Session = orm.scoped_session(orm.sessionmaker())
+register(Session)
 
 #: Global metadata. If you have multiple databases with overlapping table
 #: names, you'll need a metadata for each database

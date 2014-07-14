@@ -10,6 +10,9 @@ Changelog
 
 - Enable foreign key constraint checking for SQLite in DatabaseTestCase.
 
+- Use SQLAlchemy events instead of ZopeTransactionExtension to handle
+  integration of zope.sqlalchemy and SQLAlchemy.
+
 
 1.0 - July 13, 2014
 -------------------
