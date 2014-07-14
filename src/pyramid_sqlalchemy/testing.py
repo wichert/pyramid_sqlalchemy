@@ -25,6 +25,8 @@ class DatabaseTestCase(unittest.TestCase):
 
     def setUp(self):
         self.engine = create_engine(self.db_uri)
+        if self.engine.dialect.name == 'sqlite':
+            self.engine.execute('PRAGMA foreign_keys = ON')
         init_sqlalchemy(self.engine)
         if self.create_tables:
             metadata.create_all()

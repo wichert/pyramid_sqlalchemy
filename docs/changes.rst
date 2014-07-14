@@ -8,6 +8,8 @@ Changelog
 
 - Automatically enable two-phase commit when the SQL dialect supports it.
 
+- Enable foreign key constraint checking for SQLite in DatabaseTestCase.
+
 
 1.0 - July 13, 2014
 -------------------
