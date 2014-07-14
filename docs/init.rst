@@ -39,7 +39,7 @@ Two-phase transactions
 If your application uses both SQL and other transaction-aware systems such as
 `repoze.filesafe <http://docs.repoze.org/filesafe/>`_, `AcidFS
 <https://acidfs.readthedocs.org/en/latest/>`_, `pyramid_mailer
-<https://pyramid-mailer.readthedocs.org/>`_) or `ZODB <http://www.zodb.org/>`_
+<https://pyramid-mailer.readthedocs.org/>`_ or `ZODB <http://www.zodb.org/>`_
 you need to `two-phase commits
 <http://en.wikipedia.org/wiki/Two-phase_commit_protocol>`_ to coordinate
 transactions. You can enable these using the ``enable_sql_two_phase_commit``
