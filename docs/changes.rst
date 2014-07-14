@@ -1,6 +1,14 @@
 Changelog
 =========
 
+1.2 - Unreleased
+-------------------
+
+- Setup `Travis <https://travis-ci.org/wichert/pyramid_sqlalchemy>`_ to
+  automatically run tests on CPython 2.6, CPython 2.7, CPython 3.3, CPython 3.4
+  and PyPy.
+
+
 1.1 - July 14, 2014
 -------------------
 
