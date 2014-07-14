@@ -1,3 +1,6 @@
+.. image:: https://travis-ci.org/wichert/pyramid_sqlalchemy.svg?branch=master
+    :target: https://travis-ci.org/wichert/pyramid_sqlalchemy
+
 `pyramid_sqlalchemy` provides some basic glue to facilitate using
 `SQLAlchemy <http://www.sqlalchemy.org/>`_ with `Pyramid
 <http://docs.pylonsproject.org/projects/pyramid/en/latest/>`_.
