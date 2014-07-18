@@ -4,6 +4,8 @@ Changelog
 1.2 - Unreleased
 -------------------
 
+- Fix error on pytest fixture example.
+
 - Setup `Travis <https://travis-ci.org/wichert/pyramid_sqlalchemy>`_ to
   automatically run tests on CPython 2.6, CPython 2.7, CPython 3.3, CPython 3.4
   and PyPy.

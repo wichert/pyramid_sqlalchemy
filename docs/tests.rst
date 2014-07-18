@@ -69,6 +69,7 @@ sets up a database and its tables.
    from sqlalchemy import create_engine
    from pyramid_sqlalchemy import Session
    from pyramid_sqlalchemy import metadata
+   from pyramid_sqlalchemy import init_sqlalchemy
 
    def pytest_addoption(parser):
        parser.addoption('--sql-url', default='sqlite:///',
@@ -90,7 +91,7 @@ sets up a database and its tables.
        # Check if a previous test has kept a session open. This will silently
        # make Session.configure do nothing and then break all our tests.
        assert not Session.registry.has()
-       init_model(engine)
+       init_sqlalchemy(engine)
        metadata.create_all(engine)
    
        yield Session()
