@@ -18,7 +18,7 @@ def init_sqlalchemy(engine):
 
 
 def enable_sql_two_phase_commit(config, enable=True):
-        Session.configure(twophase=enable)
+    Session.configure(twophase=enable)
 
 
 def includeme(config):

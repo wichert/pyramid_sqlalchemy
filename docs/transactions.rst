@@ -84,6 +84,47 @@ transaction API directly. The methods you can use are:
            tx.commit()
 
 
+Savepoints or nested transactions
+---------------------------------
+
+Savepoints, sometimes also known as nested transactions, provide a way to
+execute code that might fail, but where a failure should not doom the rest of
+the transaction. The transaction system allows you to create savepoints for
+this purpose.
+
+.. code-block:: python
+   :linenos:
+
+   import transaction
+
+   def my_func():
+       ...
+       savepoint = transaction.savepoint()
+       try:
+           dangerous_function()
+       except:
+           savepoint.rollback()
+       ...
+
+
+If you manage transaction manually you should call the savepoint method of the
+current transaction instead of the global savepoint function.
+
+.. code-block:: python
+   :linenos:
+
+   import transaction
+
+   with transaction.manager as tx:
+       ...
+       savepoint = tx.savepoint()
+       try:
+           dangerous_function()
+       except:
+           savepoint.rollback()
+       ...
+
+
 Non-ORM modifications
 ---------------------
 
