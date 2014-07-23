@@ -87,6 +87,10 @@ transaction API directly. The methods you can use are:
 Savepoints or nested transactions
 ---------------------------------
 
+.. caution::
+
+   Not all SQL implementations support savepoints.
+
 Savepoints, sometimes also known as nested transactions, provide a way to
 execute code that might fail, but where a failure should not doom the rest of
 the transaction. The transaction system allows you to create savepoints for
