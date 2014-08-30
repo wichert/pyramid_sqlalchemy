@@ -1,8 +1,8 @@
 Changelog
 =========
 
-1.2 - Unreleased
--------------------
+1.2 - August 30, 2014
+---------------------
 
 - Use `unittest.mock` when available. This removes the `mock` dependency on
   Python 3.
