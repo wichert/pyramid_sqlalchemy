@@ -46,4 +46,7 @@ setup(name='pyramid_sqlalchemy',
           'docs': ['sphinx'],
           'tests': tests_require,
           },
+      entry_points={
+          'pytest11': ['pyramid_sqlalchemy = pyramid_sqlalchemy.fixtures'],
+          }
       )

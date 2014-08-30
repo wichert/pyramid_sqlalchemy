@@ -58,92 +58,65 @@ out the initialisation code. The example below is a modified version of the
 py.test fixtures
 ----------------
 
-If you use `pytest <http://pytest.org/>`_ for your tests you will need define a
-couple of fixtures to handle tests. First you need a SQLAlchemy-fixture which
-sets up a database and its tables.
+If you use `pytest <http://pytest.org/>`_ you can use the test fixtures provided
+by pyramid_sqlalchemy.
+
+For tests that need an active connection, but that do not need to use SQLAlchemy
+there is a ``transaction`` fixture available. This fixture creates a new transaction
+that will automatically be aborted at the end of the test. In order to prevent the
+transaction from being committed accidentally it is marked as `doomed`: this will
+turn any call to ``commit()`` into an error.
 
 .. code-block:: python
    :linenos:
 
-   import pytest
-   from sqlalchemy import create_engine
-   from pyramid_sqlalchemy import Session
-   from pyramid_sqlalchemy import metadata
-   from pyramid_sqlalchemy import init_sqlalchemy
+   @pytest.mark.usefixtures('transaction')
+   def test_transaction_integration():
+       # Test code that needs a transaction
 
-   def pytest_addoption(parser):
-       parser.addoption('--sql-url', default='sqlite:///',
-               help='SQLAlchemy Database URL')
-       parser.addoption('--sql-echo', default=False, action='store_true',
-               help='Echo SQL statements to console')
-
-   def pytest_generate_tests(metafunc):
-       if 'sqlalchemy_url' in metafunc.fixturenames:
-           metafunc.parametrize('sqlalchemy_url', [metafunc.config.option.sql_url], scope='session')
-       if 'sql_echo' in metafunc.fixturenames:
-           metafunc.parametrize('sql_echo', [metafunc.config.option.sql_echo], scope='session')
-
-   @pytest.yield_fixture(scope='session')
-   def _sqlalchemy(sqlalchemy_url, sql_echo):
-       engine = create_engine(sqlalchemy_url, echo=sql_echo)
-       if engine.dialect.name == 'sqlite':
-           engine.execute('PRAGMA foreign_keys = ON')
-       # Check if a previous test has kept a session open. This will silently
-       # make Session.configure do nothing and then break all our tests.
-       assert not Session.registry.has()
-       init_sqlalchemy(engine)
-       metadata.create_all(engine)
-   
-       yield Session()
-   
-       Session.remove()
-       metadata.drop_all(engine)
-       Session.configure(bind=None)
-       metadata.bind = None
-       engine.dispose()
-
-A session scope is used so the database is only created once. This fixture
-also adds two commandline options to the test runner:
-
-* ``--sql-echo`` will echo all executed SQL statements to the console
-* ``--sql-url=<url>`` can be used to run the tests against a different database.
-
-
-Next you need a fixture which creates a transaction for each test.
+The ``sql_session`` fixture must be used to test any code that needs to access
+a database. This fixture will setup a SQL backend and create all known tables.
+To speed up tests this will only be done once for the py.test session. Each
+test itself is running within its own transaction, to guarantee that any
+database changes are reverted after the test, and the next test starts with a
+clean database.
 
 .. code-block:: python
    :linenos:
 
-   import pytest
-   import mock
+   def test_model_sets_id_automatically(sql_session):
+       obj = Account(login='jane')
+       sql_session.add(obj)
+       sql_session.flush()
+       assert obj.id is not None
 
-   @pytest.yield_fixture
-   def transaction():
-       import transaction
-       tx = transaction.begin()
-       tx.doom()  # Make sure a transaction can never be commited.
-       # Mock out transaction.get so code can call abort
-       with mock.patch('transaction.get'):
-           yield
-       tx.abort()
+Normally all tests will use an in-memory SQLite database. You can run your tests
+with a different backend by using the ``--sql-url=<url>`` commandline option.
 
-We can now combine the previous two fixtures to create a ``sqlalchemy`` fixture
-which provides a test with a working database in a transaction.
+::
 
-.. code-block:: python
-   :linenos:
+    $ bin/py.test --sql-url=postgresql:///pytest
 
-   import pytest
+There is also a ``--sql-echo`` commandline option which will echo all executed SQL
+statements to the console. This must be used in combination with pytests' ``-s``
+option to make the console output visisble.
 
-   @pytest.fixture
-   def sqlalchemy(transaction, _sqlalchemy):
-       return _sqlalchemy
+::
 
-Finally we can create a fixture for functional tests. This fixture needs to
-mock out ``pyramid_sqlalchemy.includeme`` to prevent double initialisation of
-SQLAlchemy, and it adds a magic key to the request environment so pyramid_tm
-will not try to create or commit transactions.
+    $ bin/py.test --sql-echo -s
+    ======================================= test session starts ========================================
+    platform darwin -- Python 2.7.8 -- py-1.4.20 -- pytest-2.5.2
+    plugins: pyramid-sqlalchemy
+    collected 36 items / 3 skipped 
 
+    tests/ext/test_sql.py 2014-08-30 09:02:38,070 INFO sqlalchemy.engine.base.Engine SELECT CAST('test plain returns' AS VARCHAR(60)) AS anon_1
+    2014-08-30 09:02:38,070 INFO sqlalchemy.engine.base.Engine ()
+    2014-08-30 09:02:38,070 INFO sqlalchemy.engine.base.Engine SELECT CAST('test unicode returns' AS VARCHAR(60)) AS anon_1
+
+Using the provided fixtures you can create a new fixture for functional tests.
+This fixture needs to mock out ``pyramid_sqlalchemy.includeme`` to prevent
+double initialisation of SQLAlchemy, and it must add a special key to the request
+environment so pyramid_tm will not try to create or commit transactions.
 
 .. code-block:: python
    :linenos:
@@ -153,7 +126,7 @@ will not try to create or commit transactions.
    from myyapp import main
 
    @pytest.fixture
-   def app(transaction, sqlalchemy, monkeypatch):
+   def app(transaction, sql_session, monkeypatch):
        # The sqlalchemy fixture already configured SQL for us, so make sure
        # it is not run again which would result in a second connection.
        monkeypatch.setattr('pyramid_sqlalchemy.includeme', lambda c: None)

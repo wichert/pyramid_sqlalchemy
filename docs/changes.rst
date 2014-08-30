@@ -4,6 +4,9 @@ Changelog
 1.2 - Unreleased
 -------------------
 
+- Automatically make py.test fixtures available externally. This removes the
+  need to copy & paste them over from the documentation.
+
 - Fix error on pytest fixture example.
 
 - Setup `Travis <https://travis-ci.org/wichert/pyramid_sqlalchemy>`_ to
