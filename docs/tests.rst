@@ -89,9 +89,9 @@ clean database.
        assert obj.id is not None
 
 Normally all tests will use an in-memory SQLite database. You can run your tests
-with a different backend by using the ``--sql-url=<url>`` commandline option.
-
-::
+with a different backend by using the ``--sql-url=<url>`` commandline option. For
+example to run all tests against a local PostgreSQL server using the `pytest`
+database::
 
     $ bin/py.test --sql-url=postgresql:///pytest
 
