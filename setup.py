@@ -9,9 +9,12 @@ requires = [
         'zope.sqlalchemy >=0.7.4',
         ]
 
-tests_require = [
-        'mock',
-        ]
+tests_require = []
+
+try:
+    import unittest.mock
+except ImportError:
+    tests_require.append('mock')
 
 setup(name='pyramid_sqlalchemy',
       version=version,

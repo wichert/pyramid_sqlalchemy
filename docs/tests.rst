@@ -29,10 +29,15 @@ database support.
            super(ViewIntegrationTests, self).tearDown()
 
 
-When writing functional tests you need to make sure the application does not
-try to initialise SQLAlchemy a second time. The easiest way to do is to mock
-out the initialisation code. The example below is a modified version of the
-:ref:`Pyramid functional test example <pyramid:functional_tests>`.
+.. warning::
+
+   It is critical that you call the setUp() method of the base classes first.
+   This is necessary to guarantee everything is configured correctly before you
+   run any code that might touch pyramid_sqlalchemy.
+
+Writing functional tests is just as easy. The example below is a modified
+version of the :ref:`Pyramid functional test example
+<pyramid:functional_tests>`.
 
 .. code-block:: python
    :linenos:
@@ -43,16 +48,9 @@ out the initialisation code. The example below is a modified version of the
        def setUp(self):
            from myapp import main
            from webtest import TestApp
-           import mock
            super(ViewIntegrationTests, self).setUp()
-           self._sql_patcher = mock.patch('pyramid_sqlalchemy.includeme')
-           self._sql_patcher.start()
            app = main({})
            self.testapp = TestApp(App)
-
-       def tearDown(self):
-           self._sql_patcher.stop()
-           super(ViewIntegrationTests, self).tearDown()
 
 
 py.test fixtures
@@ -114,21 +112,17 @@ option to make the console output visisble.
     2014-08-30 09:02:38,070 INFO sqlalchemy.engine.base.Engine SELECT CAST('test unicode returns' AS VARCHAR(60)) AS anon_1
 
 Using the provided fixtures you can create a new fixture for functional tests.
-This fixture needs to mock out ``pyramid_sqlalchemy.includeme`` to prevent
-double initialisation of SQLAlchemy, and it must add a special key to the request
-environment so pyramid_tm will not try to create or commit transactions.
+This fixture needs add a special key to the request environment to tell the
+`pyramid_tm` tween not to to create or commit transactions.
 
 .. code-block:: python
    :linenos:
 
    import pytest
    from webtest_plus import TestApp
-   from myyapp import main
+   from myapp import main
 
    @pytest.fixture
-   def app(transaction, sql_session, monkeypatch):
-       # The sqlalchemy fixture already configured SQL for us, so make sure
-       # it is not run again which would result in a second connection.
-       monkeypatch.setattr('pyramid_sqlalchemy.includeme', lambda c: None)
+   def app(sql_session):
        app = main({})
        return TestApp(app, extra_environ={'repoze.tm.active': True})

@@ -1,3 +1,7 @@
+try:
+    from unittest import mock
+except ImportError:
+    import mock
 import unittest
 from sqlalchemy import create_engine
 from pyramid_sqlalchemy import init_sqlalchemy
@@ -31,6 +35,8 @@ class DatabaseTestCase(unittest.TestCase):
         if self.create_tables:
             metadata.create_all()
         super(DatabaseTestCase, self).setUp()
+        self._sqlalchemy_patcher = mock.patch('pyramid_sqlalchemy.includeme')
+        self._sqlalchemy_patcher.start()
 
     def tearDown(self):
         transaction.abort()
@@ -40,6 +46,7 @@ class DatabaseTestCase(unittest.TestCase):
         Session.configure(bind=None)
         metadata.bind = None
         self.engine.dispose()
+        self._sqlalchemy_patcher.stop()
         super(DatabaseTestCase, self).tearDown()
 
 

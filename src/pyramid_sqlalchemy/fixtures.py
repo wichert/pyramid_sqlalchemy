@@ -1,4 +1,7 @@
-import mock
+try:
+    from unittest import mock
+except ImportError:
+    import mock
 import pytest
 from sqlalchemy import create_engine
 from . import Session
@@ -56,7 +59,7 @@ def transaction():
 
 
 @pytest.fixture
-def sql_session(transaction, _sqlalchemy):
+def sql_session(transaction, _sqlalchemy, monkeypatch):
     """Provide a configured SQLAlchemy session running within a transaction.
     You can use the --sql-url commandline option to specify the SQL backend to
     use. The default configuration will use an in-memory SQLite database.
@@ -64,6 +67,9 @@ def sql_session(transaction, _sqlalchemy):
     You can also use the --sql-echo option to enable logging of all SQL
     statements to the console.
     """
+    # SQL is already configured, so make sure it is not run again which would
+    # result in a second connection.
+    monkeypatch.setattr('pyramid_sqlalchemy.includeme', lambda c: None)
     return _sqlalchemy
 
 

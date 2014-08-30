@@ -4,6 +4,12 @@ Changelog
 1.2 - Unreleased
 -------------------
 
+- Use `unittest.mock` when available. This removes the `mock` dependency on
+  Python 3.
+
+- Tests no longer need to mock out pyramid_sqlalchemy.includeme; this is now
+  handled by ``DatabaseTestCase`` and the py.test fixtures.
+
 - Automatically make py.test fixtures available externally. This removes the
   need to copy & paste them over from the documentation.
 
