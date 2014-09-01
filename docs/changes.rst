@@ -1,10 +1,12 @@
 Changelog
 =========
 
-1.3 - Unreleased
----------------------
+1.2.1 - September 1, 2014
+-------------------------
 
-- ...
+- Move pyramid to a test-only dependency. This makes it simpler to use
+  pyramid_sqlalchemy in non-pyramid contexts.
+
 
 
 1.2 - August 30, 2014
