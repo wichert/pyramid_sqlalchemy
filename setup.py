@@ -4,12 +4,11 @@ from setuptools import find_packages
 version = '1.3dev'
 
 requires = [
-        'pyramid',
         'SQLAlchemy >=0.7.0',
         'zope.sqlalchemy >=0.7.4',
         ]
 
-tests_require = []
+tests_require = ['pyramid']
 
 try:
     import unittest.mock
