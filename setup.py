@@ -1,3 +1,4 @@
+import sys
 from setuptools import setup
 from setuptools import find_packages
 
@@ -7,6 +8,9 @@ requires = [
         'SQLAlchemy >=0.7.0',
         'zope.sqlalchemy >=0.7.4',
         ]
+
+if sys.version_info[:2] < (3, 3):
+    requires.append('mock')
 
 tests_require = ['pyramid']
 
