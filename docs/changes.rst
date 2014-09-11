@@ -1,8 +1,8 @@
 Changelog
 =========
 
-1.3 - Unreleased
--------------------------
+1.2.2 - September 11, 2014
+--------------------------
 
 - Add dependency on mock for Python <3.3. This fixes import problems who try to
   import pyramid_sqlalchemy.testing in production code.
