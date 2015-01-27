@@ -119,7 +119,7 @@ This fixture needs add a special key to the request environment to tell the
    :linenos:
 
    import pytest
-   from webtest_plus import TestApp
+   from webtest import TestApp
    from myapp import main
 
    @pytest.fixture
