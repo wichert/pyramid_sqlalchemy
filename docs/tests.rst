@@ -123,6 +123,8 @@ This fixture needs add a special key to the request environment to tell the
    from myapp import main
 
    @pytest.fixture
-   def app(sql_session):
+   def app(monkeypatch, sql_session):
+       # Prevent SQL re-configuration with non-testing setup
+       monkeypatch.setattr('pyramid_sqlalchemy.includeme', lambda c: None)
        app = main({})
        return TestApp(app, extra_environ={'repoze.tm.active': True})
