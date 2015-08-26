@@ -5,7 +5,7 @@ from sqlalchemy.ext.declarative import declarative_base
 from zope.sqlalchemy import register
 
 #: SQLAlchemy session manager.  Updated by
-# :py:func:`s4u.sqlalchemy.init_sqlalchemy`.
+# :py:func:`pyramid_sqlalchemy.init_sqlalchemy`.
 Session = orm.scoped_session(orm.sessionmaker())
 register(Session)
 
