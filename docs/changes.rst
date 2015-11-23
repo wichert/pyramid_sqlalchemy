@@ -4,6 +4,11 @@ Changelog
 1.3 - Unreleased
 --------------------------
 
+- Configure a default naming convention, as `recommended by alembic
+  <http://alembic.readthedocs.org/en/latest/naming.html>`).
+  `Pull request 3 <https://github.com/wichert/pyramid_sqlalchemy/pull/3>`_
+  from Marcin Lulek.
+
 - Fix a broken import in pyramid_sqlalchemy's own test when running on Python 3.
 
 - Allow overriding the database used for testing with the pytest ``--sql-url`` 
