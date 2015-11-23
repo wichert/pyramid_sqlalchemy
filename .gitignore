@@ -1,5 +1,6 @@
 *.sw[opq]
 *.py[co]
+/.cache
 /.coverage
 /dist
 /coverage.xml
@@ -13,3 +14,5 @@
 /lib
 
 /pyvenv.cfg
+/pip-selfcheck.json
+
