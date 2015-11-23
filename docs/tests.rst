@@ -53,6 +53,16 @@ version of the :ref:`Pyramid functional test example
            self.testapp = TestApp(App)
 
 
+
+Normally all tests are run with an in-memory SQLite database. There are several
+ways to change this:
+
+* Set the ``db_uri`` variable in your test class to a different database URI.
+* Set the ``DB_URI`` environment variable.
+* If you use pytest as test runner you can use the ``--sql-url`` option to
+  set the database URI.
+
+
 py.test fixtures
 ----------------
 
@@ -128,3 +138,4 @@ This fixture needs add a special key to the request environment to tell the
        monkeypatch.setattr('pyramid_sqlalchemy.includeme', lambda c: None)
        app = main({})
        return TestApp(app, extra_environ={'repoze.tm.active': True})
+

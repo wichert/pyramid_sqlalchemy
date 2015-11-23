@@ -2,6 +2,7 @@ try:
     from unittest import mock
 except ImportError:
     import mock
+import os
 import unittest
 from sqlalchemy import create_engine
 from pyramid_sqlalchemy import init_sqlalchemy
@@ -24,11 +25,16 @@ class DatabaseTestCase(unittest.TestCase):
     create_tables = True
 
     #: :ref:`Database URL <sqlalchemy:database_urls>` for the test database.
-    #: Normally a private in-memory SQLite database is used.
+    #: Normally a private in-memory SQLite database is used. You can override
+    #: this with the pytest --sql-url parameter, or the DB_URI environment
+    #: environment variable.
     db_uri = 'sqlite://'
 
+    def database_url(self):
+        return os.environ.get('DB_URI', self.db_uri)
+
     def setUp(self):
-        self.engine = create_engine(self.db_uri)
+        self.engine = create_engine(self.database_url())
         if self.engine.dialect.name == 'sqlite':
             self.engine.execute('PRAGMA foreign_keys = ON')
         init_sqlalchemy(self.engine)
