@@ -5,7 +5,7 @@ Changelog
 -----------------------
 
 - Configure a default naming convention, as `recommended by alembic
-  <http://alembic.readthedocs.org/en/latest/naming.html>`).
+  <http://alembic.readthedocs.org/en/latest/naming.html>`_).
   `Pull request 3 <https://github.com/wichert/pyramid_sqlalchemy/pull/3>`_
   from Marcin Lulek.
 
