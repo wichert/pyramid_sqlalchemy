@@ -1,8 +1,8 @@
 Changelog
 =========
 
-1.3 - Unreleased
---------------------------
+1.3 - November 23, 2015
+-----------------------
 
 - Configure a default naming convention, as `recommended by alembic
   <http://alembic.readthedocs.org/en/latest/naming.html>`).
