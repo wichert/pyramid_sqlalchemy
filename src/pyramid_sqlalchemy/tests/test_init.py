@@ -15,7 +15,10 @@ class test_init_sqlalchemy(unittest.TestCase):
 
 class includeme_tests(unittest.TestCase):
     def test_sqlite_config(self):
-        import mock
+        try:
+            from unittest import mock
+        except ImportError:
+            import mock
 
         config = Configurator(settings={'sqlalchemy.url': 'sqlite://'})
 
@@ -26,7 +29,11 @@ class includeme_tests(unittest.TestCase):
             self.assertEqual(str(engine.url), 'sqlite://')
 
     def test_two_phase_directive(self):
-        import mock
+        try:
+            from unittest import mock
+        except ImportError:
+            import mock
+
         config = Configurator()
         with mock.patch('pyramid_sqlalchemy.Session.configure') as configure:
             with mock.patch('pyramid_sqlalchemy.engine_from_config'):

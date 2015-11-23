@@ -4,6 +4,8 @@ Changelog
 1.3 - Unreleased
 --------------------------
 
+- Fix a broken import in pyramid_sqlalchemy's own test when running on Python 3.
+
 - Allow overriding the database used for testing with the pytest ``--sql-url`` 
   option when using the ``DatabaseTestCase`` test class. For non-pytest users
   support the ``DB_URI`` environment variable as well.
