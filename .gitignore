@@ -2,6 +2,7 @@
 *.py[co]
 /.cache
 /.coverage
+/build
 /dist
 /coverage.xml
 /nosetests.xml
