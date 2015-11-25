@@ -1,6 +1,15 @@
 Changelog
 =========
 
+1.4 - November 25, 2015
+-----------------------
+
+- Revert naming convention change. This change broke all existing data models
+  which did not supply a constraint name everywhere. This is especially bad
+  for types which implicitly create unnamed constraints, such as booleans and
+  enums on dialects that do not have native support.
+
+
 1.3 - November 23, 2015
 -----------------------
 
