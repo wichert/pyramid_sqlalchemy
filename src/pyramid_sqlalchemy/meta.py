@@ -9,19 +9,9 @@ from zope.sqlalchemy import register
 Session = orm.scoped_session(orm.sessionmaker())
 register(Session)
 
-#: Proper naming convention for metadata as per 
-#: alembic/sqlalchemy documentation
-NAMING_CONVENTION = {
-    "ix": 'ix_%(column_0_label)s',
-    "uq": "uq_%(table_name)s_%(column_0_name)s",
-    "ck": "ck_%(table_name)s_%(constraint_name)s",
-    "fk": "fk_%(table_name)s_%(column_0_name)s_%(referred_table_name)s",
-    "pk": "pk_%(table_name)s"
-}
-
 #: Global metadata. If you have multiple databases with overlapping table
 #: names, you'll need a metadata for each database
-metadata = schema.MetaData(naming_convention=NAMING_CONVENTION)
+metadata = schema.MetaData()
 
 #: Base classes for models using declarative syntax
 BaseObject = declarative_base(metadata=metadata)
