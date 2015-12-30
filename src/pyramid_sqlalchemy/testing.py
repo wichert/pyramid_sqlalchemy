@@ -41,7 +41,7 @@ class DatabaseTestCase(unittest.TestCase):
         if self.create_tables:
             metadata.create_all()
         super(DatabaseTestCase, self).setUp()
-        self._sqlalchemy_patcher = mock.patch('pyramid_sqlalchemy.includeme')
+        self._sqlalchemy_patcher = mock.patch('pyramid_sqlalchemy.includeme', lambda c: None)
         self._sqlalchemy_patcher.start()
 
     def tearDown(self):

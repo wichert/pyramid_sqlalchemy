@@ -1,6 +1,13 @@
 Changelog
 =========
 
+1.5 - December 30, 2015
+-----------------------
+
+- Fix a compatibility error with the DatabaseTestCase class which could break
+  functional test setup.
+
+
 1.4 - November 25, 2015
 -----------------------
 
