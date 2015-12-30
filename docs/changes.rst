@@ -7,6 +7,9 @@ Changelog
 - Fix a compatibility error with the DatabaseTestCase class which could break
   functional test setup.
 
+- Code reorganisation: move tests outside the package; there is no point in
+  installing them.
+
 
 1.4 - November 25, 2015
 -----------------------
