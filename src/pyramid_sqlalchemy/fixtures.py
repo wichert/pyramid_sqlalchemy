@@ -56,8 +56,8 @@ def transaction():
     import transaction
     tx = transaction.begin()
     tx.doom()  # Make sure a transaction can never be commited.
-    # Mock out transaction.get so code can call abort
-    with mock.patch('transaction.get'):
+    # Mock out transaction.commit so code can never commit around us.
+    with mock.patch('transaction.Transaction.commit'):
         yield
     tx.abort()
 
