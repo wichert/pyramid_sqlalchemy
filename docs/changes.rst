@@ -1,8 +1,8 @@
 Changelog
 =========
 
-1.6 - Unreleased
------------------------
+1.6 - January 4, 2016
+---------------------
 
 - Update ``transaction`` pytest fixture to not mock out ``transation.get()``
   completely, but only the ``commit()`` transaction method. This fixes problems
