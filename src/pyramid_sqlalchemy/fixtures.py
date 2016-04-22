@@ -15,27 +15,21 @@ DEFAULT_URI = 'sqlite:///'
 
 def pytest_addoption(parser):
     parser.addoption('--sql-url', default=DEFAULT_URI,
-            help='SQLAlchemy Database URL')
+                     help='SQLAlchemy Database URL')
     parser.addoption('--sql-echo', default=False, action='store_true',
-            help='Echo SQL statements to console')
+                     help='Echo SQL statements to console')
 
 
 def pytest_configure(config):
     DatabaseTestCase.db_uri = config.getoption('sql_url')
 
 
-def pytest_generate_tests(metafunc):
-    if 'sqlalchemy_url' in metafunc.fixturenames:
-        metafunc.parametrize('sqlalchemy_url',
-        [metafunc.config.getoption('sql_url')], scope='session')
-    if 'sql_echo' in metafunc.fixturenames:
-        metafunc.parametrize('sql_echo',
-        [metafunc.config.getoption('sql_echo')], scope='session')
-
-
 @pytest.yield_fixture(scope='session')
-def _sqlalchemy(sqlalchemy_url, sql_echo):
-    engine = create_engine(sqlalchemy_url, echo=sql_echo)
+def _sqlalchemy(request):
+
+    engine = create_engine(request.config.option.sql_url,
+                           echo=request.config.option.sql_echo)
+
     if engine.dialect.name == 'sqlite':
         engine.execute('PRAGMA foreign_keys = ON')
     # Check if a previous test has kept a session open. This will silently
