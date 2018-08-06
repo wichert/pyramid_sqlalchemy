@@ -30,4 +30,4 @@ def includeme(config):
     init_sqlalchemy(engine)
 
 
-__all__ = ['BaseObject', 'Session', 'metadata', 'init_model']
+__all__ = ['BaseObject', 'Session', 'metadata']
