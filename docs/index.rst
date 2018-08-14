@@ -1,31 +1,37 @@
 `pyramid_sqlalchemy` provides some basic glue to facilitate using
-`SQLAlchemy <http://www.sqlalchemy.org/>`_ with `Pyramid
+`SQLAlchemy <http://www.sqlalchemy.org/>`_ over multiple packages,
+and integration with `Pyramid
 <http://docs.pylonsproject.org/projects/pyramid/en/latest/>`_.
 
-SQLAlchemy relies on global state for a few things: 
+SQLAlchemy relies on global state for a few things:
 
 * A :ref:`MetaData <sqlalchemy:metadata_toplevel>` instance which tracks all
   known SQL tables.
 * A :ref:`ORM base class <sqlalchemy:declarative_toplevel>` for all models using the ORM.
 * A :ref:`session factory <sqlalchemy:unitofwork_contextual>`.
 
-Every application using SQLAlchemy must provides its own instance of these.
+Every application using SQLAlchemy and its must provides its own instance of these.
 This makes it hard create add-on packages that also use SQLAlchemy, since they
 either need to have their own SQLAlchemy state, which makes it hard to
 integrate them into your application, or they need to jump through multiple
 complex hoops to allow them share state with your application.
 
 pyramid_sqlalchemy helps by providing a canonical location for the global
-SQLAlchemy state. In addition it provides a convenient way to configure
-SQLAlchemy in a Pyramid application.
+SQLAlchemy state.
+
+For advanced users it also supports multiple databases, with different tables
+for each database.
+
+This is a minimal example showing SQLAlchemy use in a pyramid application:
+
 
 .. code-block:: python
    :linenos:
 
    from pyramid.config import Configurator
-   from pyramid_sqlalchemy import BaseObject
+   from pyramid_sqlalchemy import orm_base
 
-   class MyModel(BaseObject):
+   class MyModel(orm_base()):
        __tablename__ = 'my_model'
        ...
 
@@ -44,9 +50,10 @@ Contents
    :maxdepth: 1
 
    usage
-   init
    transactions
+   pyramid
    tests
+   advanced
    changes
 
 Indices and tables

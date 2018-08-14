@@ -1,33 +1,35 @@
-import logging
-from sqlalchemy import engine_from_config
-from pyramid_sqlalchemy.meta import metadata
-from pyramid_sqlalchemy.meta import BaseObject
-from pyramid_sqlalchemy.meta import Session
-import pyramid_sqlalchemy.events
-pyramid_sqlalchemy.events  # Keep PyFlakes happy
+from .meta import (
+    get_connection_info,
+    get_metadata,
+    get_sql_session,
+    BaseObject,
+    Session,
+    metadata,
+)
+from .pyramid import includeme  # noqa
 
 
-log = logging.getLogger('pyramid_sqlalchemy')
+def bind_connection(engine, name='default'):
+    """Bind a named connection to a SQLAlchemy engine.
+
+    This must be called before using using any of the SQLAlchemy managed
+    tables or classes linked to the connection.
+    """
+    get_connection_info(name).bind(engine)
 
 
 def init_sqlalchemy(engine):
-    """Initialise the SQLAlchemy models. This must be called before using
-    using any of the SQLAlchemy managed the tables or classes in the model."""
-    Session.configure(bind=engine)
-    metadata.bind = engine
+    """Initialise the SQLAlchemy connection.
 
+    This must be called before using using any of the SQLAlchemy managed
+    tables or classes in the model.
 
-def enable_sql_two_phase_commit(config, enable=True):
-    Session.configure(twophase=enable)
-
-
-def includeme(config):
-    """'Convenience method to initialise all components of this
-    :mod:`pyramid_sqlalchemy` package from a pyramid applicaiton.
+    This will only configure the default connection. If you want to
     """
-    config.add_directive('enable_sql_two_phase_commit', enable_sql_two_phase_commit)
-    engine = engine_from_config(config.registry.settings, 'sqlalchemy.')
-    init_sqlalchemy(engine)
+    bind_connection(engine)
 
 
-__all__ = ['BaseObject', 'Session', 'metadata']
+__all__ = [
+    'get_connection_info', 'get_metadata', 'get_sql_session',
+    'BaseObject', 'Session', 'metadata'
+]

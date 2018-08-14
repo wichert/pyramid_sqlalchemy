@@ -5,7 +5,7 @@
 `SQLAlchemy <http://www.sqlalchemy.org/>`_ with `Pyramid
 <http://docs.pylonsproject.org/projects/pyramid/en/latest/>`_.
 
-SQLAlchemy relies on global state for a few things: 
+SQLAlchemy relies on global state for a few things:
 
 * A ``MetaData`` instance which tracks all known SQL tables.
 * A base class for all models using the ORM.
@@ -24,9 +24,9 @@ SQLAlchemy in a Pyramid application.
 ::
 
     from pyramid.config import Configurator
-    from pyramid_sqlalchemy import BaseObject
+    from pyramid_sqlalchemy import orm_base
 
-    class MyModel(BaseObject):
+    class MyModel(orm_base()):
         __tablename__ = 'my_model'
         ...
 

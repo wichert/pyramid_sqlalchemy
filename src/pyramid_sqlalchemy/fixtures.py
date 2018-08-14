@@ -5,8 +5,7 @@ except ImportError:
 import pytest
 from sqlalchemy import create_engine
 from .testing import DatabaseTestCase
-from . import Session
-from . import metadata
+from .meta import Session, metadata, _KEY_DATA
 from . import init_sqlalchemy
 
 
@@ -34,16 +33,18 @@ def _sqlalchemy(request):
         engine.execute('PRAGMA foreign_keys = ON')
     # Check if a previous test has kept a session open. This will silently
     # make Session.configure do nothing and then break all our tests.
-    assert not Session.registry.has()
-    init_sqlalchemy(engine)
-    metadata.create_all(engine)
+    for v in _KEY_DATA.values():
+        assert not v.session_factory.registry.has()
+    
+    con_info = get_connection_info()
+    con_info.bind(engine)
+    con_info.metadata.create_all(engine)
 
-    yield Session()
+    yield con_info.session_factory()
 
-    Session.remove()
-    metadata.drop_all(engine)
-    Session.configure(bind=None)
-    metadata.bind = None
+    con_info.session_factory.remove()
+    con_info.metadata.drop_all(engine)
+    con_info.unbind()
     engine.dispose()
 
 
@@ -73,7 +74,7 @@ def sql_session(transaction, _sqlalchemy, monkeypatch):
     """
     # SQL is already configured, so make sure it is not run again which would
     # result in a second connection.
-    monkeypatch.setattr('pyramid_sqlalchemy.includeme', lambda c: None)
+    monkeypatch.setattr('pyramid_sqlalchemy.pyramid.includeme', lambda c: None)
     return _sqlalchemy
 
 

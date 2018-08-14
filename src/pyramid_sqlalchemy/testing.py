@@ -5,9 +5,7 @@ except ImportError:
 import os
 import unittest
 from sqlalchemy import create_engine
-from pyramid_sqlalchemy import init_sqlalchemy
-from pyramid_sqlalchemy import metadata
-from pyramid_sqlalchemy import Session
+from pyramid_sqlalchemy import init_sqlalchemy, metadata, Session
 import transaction
 
 
@@ -41,7 +39,8 @@ class DatabaseTestCase(unittest.TestCase):
         if self.create_tables:
             metadata.create_all()
         super(DatabaseTestCase, self).setUp()
-        self._sqlalchemy_patcher = mock.patch('pyramid_sqlalchemy.includeme', lambda c: None)
+        self._sqlalchemy_patcher = mock.patch(
+            'pyramid_sqlalchemy.pyramid.includeme', lambda c: None)
         self._sqlalchemy_patcher.start()
 
     def tearDown(self):
