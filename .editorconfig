@@ -1,0 +1,11 @@
+[*]
+trim_trailing_whitespace = true
+charset = utf-8
+
+[**.py]
+indent_size = 4
+indent_style = space
+
+[Makefile]
+indent_size = 8
+indent_style = tab
