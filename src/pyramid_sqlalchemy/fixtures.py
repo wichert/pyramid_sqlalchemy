@@ -5,8 +5,7 @@ except ImportError:
 import pytest
 from sqlalchemy import create_engine
 from .testing import DatabaseTestCase
-from .meta import Session, metadata, _KEY_DATA
-from . import init_sqlalchemy
+from .meta import _KEY_DATA, get_connection_info
 
 
 DEFAULT_URI = 'sqlite:///'
@@ -35,7 +34,7 @@ def _sqlalchemy(request):
     # make Session.configure do nothing and then break all our tests.
     for v in _KEY_DATA.values():
         assert not v.session_factory.registry.has()
-    
+
     con_info = get_connection_info()
     con_info.bind(engine)
     con_info.metadata.create_all(engine)

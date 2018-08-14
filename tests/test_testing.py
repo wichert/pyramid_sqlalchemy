@@ -33,7 +33,7 @@ class DatabaseTestCaseTests(unittest.TestCase):
             __tablename__ = 'dummy'
 
             id = sqlalchemy.schema.Column(sqlalchemy.types.Integer(),
-                    primary_key=True, autoincrement=True)
+                                          primary_key=True, autoincrement=True)
 
         try:
             testcase.setUp()
