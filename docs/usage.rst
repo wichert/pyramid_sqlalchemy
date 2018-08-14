@@ -6,7 +6,7 @@ Initialisation
 --------------
 
 Initialisation is very easy: the only thing you need to do is to create an
-:ref:`SQLAlchemy engine <sqlalchemy:engine-configuration>`, normally by
+:ref:`SQLAlchemy engine <sqlalchemy:engines_toplevel>`, normally by
 providing a :ref:`database URL <sqlalchemy:database_urls>` to
 :py:func:`sqlalchemy.create_engine`, and tell
 pyramid_sqlalchemy about that using the
@@ -26,7 +26,7 @@ ORM classes
 -----------
 
 SQLAlchemy provides an incredible :ref:`ORM
-<sqlalchemy:object-relational-tutorial>` to interact with databases. To use
+<sqlalchemy:ormtutorial_toplevel>` to interact with databases. To use
 this with pyramid_sqlalchemy the only thing you need to remember is to
 use the `pyramid_sqlalchemy.orm_base` function to get the base classes for
 mapped classes.
