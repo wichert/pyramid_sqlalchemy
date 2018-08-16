@@ -69,7 +69,7 @@ def get_metadata(name='default'):
 
 
 def get_sql_session(name='default'):
-    return get_connection_info(name).session_factory
+    return get_connection_info(name).session_factory()
 
 
 def get_sql_query(cls):
@@ -85,7 +85,7 @@ metadata = get_metadata()
 BaseObject = orm_base()
 
 #: Global session factory for the `default` connection.
-Session = get_sql_session()
+Session = get_connection_info().session_factory
 
 
 __all__ = ['Session', 'metadata', 'BaseObject']

@@ -2,6 +2,7 @@ from .meta import (
     get_connection_info,
     get_metadata,
     get_sql_session,
+    orm_base,
     BaseObject,
     Session,
     metadata,
@@ -30,6 +31,6 @@ def init_sqlalchemy(engine):
 
 
 __all__ = [
-    'get_connection_info', 'get_metadata', 'get_sql_session',
+    'get_connection_info', 'get_metadata', 'get_sql_session', 'orm_base',
     'BaseObject', 'Session', 'metadata'
 ]

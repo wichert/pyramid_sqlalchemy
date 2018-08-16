@@ -5,7 +5,7 @@ except ImportError:
 import pytest
 from sqlalchemy import create_engine
 from .testing import DatabaseTestCase
-from .meta import _KEY_DATA, get_connection_info
+from .meta import get_connection_info
 
 
 DEFAULT_URI = 'sqlite:///'
@@ -22,20 +22,17 @@ def pytest_configure(config):
     DatabaseTestCase.db_uri = config.getoption('sql_url')
 
 
-@pytest.yield_fixture(scope='session')
-def _sqlalchemy(request):
-
-    engine = create_engine(request.config.option.sql_url,
-                           echo=request.config.option.sql_echo)
+def sql_session_fixture(name, url, echo=False):
+    engine = create_engine(url, echo=echo)
 
     if engine.dialect.name == 'sqlite':
         engine.execute('PRAGMA foreign_keys = ON')
+
+    con_info = get_connection_info(name)
     # Check if a previous test has kept a session open. This will silently
     # make Session.configure do nothing and then break all our tests.
-    for v in _KEY_DATA.values():
-        assert not v.session_factory.registry.has()
+    assert not con_info.session_factory.registry.has()
 
-    con_info = get_connection_info()
     con_info.bind(engine)
     con_info.metadata.create_all(engine)
 
@@ -45,6 +42,13 @@ def _sqlalchemy(request):
     con_info.metadata.drop_all(engine)
     con_info.unbind()
     engine.dispose()
+
+
+@pytest.yield_fixture(scope='session')
+def _sqlalchemy(request):
+    return sql_session_fixture('default',
+                               url=request.config.option.sql_url,
+                               echo=request.config.option.sql_echo)
 
 
 @pytest.yield_fixture

@@ -95,6 +95,24 @@ enough to figure out which session it needs to use.
        .first()
 
 
+When writing tests you will need to define an extra fixture for extra
+connections you create. This is easily done via the
+:py:func:`pyramid_sqlalchemy.fixtures.sql_session_fixture`
+helper.
+
+.. code-block:: python
+   :linenos:
+
+   import pytest
+   from pyramid_sqlalchemy.fixtures import sql_session_fixture
+
+   @pytest.yield_fixture
+   def warehouse_sql_session():
+       """A SQLAlchemy session for the warehouse database.
+       """
+       yield from sql_session_fixture('warehouse', 'sqlite:///')
+
+
 Two-phase transactions
 ----------------------
 
