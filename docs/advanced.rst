@@ -112,6 +112,22 @@ helper.
        """
        yield from sql_session_fixture('warehouse', 'sqlite:///')
 
+If you need to support Python versions before 3.3 you can not use ``yield from``
+and need to use this more verbose variant:
+
+.. code-block:: python
+   :linenos:
+
+   import pytest
+   from pyramid_sqlalchemy.fixtures import sql_session_fixture
+
+   @pytest.yield_fixture
+   def warehouse_sql_session():
+       """A SQLAlchemy session for the warehouse database.
+       """
+       for f in sql_session_fixture('warehouse', 'sqlite:///'):
+           yield f
+
 
 Two-phase transactions
 ----------------------
