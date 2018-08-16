@@ -46,9 +46,9 @@ def sql_session_fixture(name, url, echo=False):
 
 @pytest.yield_fixture(scope='session')
 def _sqlalchemy(request):
-    return sql_session_fixture('default',
-                               url=request.config.option.sql_url,
-                               echo=request.config.option.sql_echo)
+    yield from sql_session_fixture('default',
+                                   url=request.config.option.sql_url,
+                                   echo=request.config.option.sql_echo)
 
 
 @pytest.yield_fixture
