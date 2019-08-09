@@ -50,7 +50,7 @@ version of the :ref:`Pyramid functional test example
            from webtest import TestApp
            super(FunctionalTests, self).setUp()
            app = main({})
-           self.testapp = TestApp(App)
+           self.testapp = TestApp(app)
 
 
 
