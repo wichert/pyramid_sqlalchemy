@@ -44,11 +44,11 @@ version of the :ref:`Pyramid functional test example
 
    from pyramid_sqlalchemy.testing import DatabaseTestCase
 
-   class FunctionalTests(unittest.TestCase):
+   class FunctionalTests(DatabaseTestCase):
        def setUp(self):
            from myapp import main
            from webtest import TestApp
-           super(ViewIntegrationTests, self).setUp()
+           super(FunctionalTests, self).setUp()
            app = main({})
            self.testapp = TestApp(App)
 
